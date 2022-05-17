@@ -10,6 +10,6 @@ class modulesapp extends Model
     use HasFactory;
 
     protected $table = "modulesapps";
-
+    protected $fillable = ['id'];
 
 }

@@ -9,12 +9,12 @@
     <meta charset="utf-8" />
     <meta  name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title')</title>
+    <title>Fronteras</title>
     <meta name="description" content="" />
 
-    <!-- Favicon -->
+    <!-- Favicon 
     <link rel="icon" type="image/x-icon" href="../assets/img/favicon/favicon.ico" />
-
+-->
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -26,9 +26,19 @@
 
     <!-- Core CSS -->
     <link rel="stylesheet" href="{{asset('assets/vendor/css/core.css')}}" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="{{asset('assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}" />
 
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables/datatables.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/plugins/datatables/jquery.dataTables.css')}}" />
+
+    <link rel="stylesheet" href="{{asset('assets/vendor/css/theme-default.css')}}" class="template-customizer-theme-css" />
+    <link href="{{ asset('assets/plugins/jconfirm/css/jquery-confirm.css') }} " rel="stylesheet">
+    <link href="{{ asset('assets/plugins/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/select2/dist/css/select2.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/plugins/amaranjs/dist/css/amaran.min.css') }}" rel="stylesheet">    
+
+    <!-- <link rel="stylesheet" href="{{asset('assets/css/core.css')}}" />  !-->
+    <link rel="stylesheet" href="{{asset('assets/css/demo.css')}}" />
+    <link rel="stylesheet" href="{{asset('assets/css/custom.css')}}" />
     @yield('addCss')
 
     <!-- Vendors CSS -->
@@ -44,6 +54,7 @@
     <!--! Template customizer & Theme config files MUST be included after core stylesheets and helpers.js in the <head> section -->
     <!--? Config:  Mandatory theme config file contain global vars & default theme options, Set your preferred theme option in this file.  -->
     <script src="{{asset('assets/js/config.js')}}"></script>
+    <script> var baseApp =  "{{ env('APP_URL')}}" </script>
   </head>
 
   <body>
@@ -91,19 +102,46 @@
     <!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="{{asset('assets/vendor/libs/jquery/jquery.js')}}"></script>
+    <script src="{{ asset('assets/plugins/jconfirm/js/jquery-confirm.js') }}"></script>
+    <script src="{{ asset('assets/plugins/select2/dist/js/select2.js') }}"></script>
     <script src="{{asset('assets/vendor/libs/popper/popper.js')}}"></script>
     <script src="{{asset('assets/vendor/js/bootstrap.js')}}"></script>
     <script src="{{asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js')}}"></script>
     <script src="{{asset('assets/vendor/js/menu.js')}}"></script>
     <!-- endbuild -->
-    <!-- Vendors JS -->
-    <script src="{{asset('assets/vendor/libs/apex-charts/apexcharts.js')}}"></script>
+ 
     <!-- Main JS -->
     <script src="{{asset('assets/js/main.js')}}"></script>
+    <script src="{{asset('assets/js/functions.js')}}"></script>
     <!-- Page JS -->
-    <script src="{{asset('assets/js/dashboards-analytics.js')}} "></script>
+    <script src="{{asset('assets/plugins/sweetalert2/sweetalert2.all.min.js')}} "></script>
+    <script src="{{asset('assets/plugins/datatables/datatables.js')}}"></script>
+    <script src="{{asset('assets/plugins/datatables/dataTables.bootstrap.js')}}"></script>
+    <script src="{{asset('assets/plugins/amaranjs/dist/js/jquery.amaran.js')}}"></script>
 
     @yield('addFooter')
+
+   
+    @if( @session('alert-success'))
+
+    <script>
+      Swal.fire(
+        'Confirmación',
+        '{{@session('alert-success')}}',
+        'success'
+      )
+    </script>
+
+    @endif
+    @if(@session('alert-danger'))
+      <script>
+        Swal.fire(
+          'Alerta',
+          '{{@session('alert-danger')}}',
+          'error'
+        )
+      </script>
+    @endif
     
   </body>
 </html>

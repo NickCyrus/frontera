@@ -48,6 +48,7 @@
                     id="password"
                     class="form-control"
                     name="password"
+                    value="{{old('password')}}"
                     placeholder="&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;&#xb7;"
                     aria-describedby="password"
                   />
@@ -69,6 +70,9 @@
               </div>
               !-->
               <div class="mb-3">
+                @if (session('errorLogin'))
+                  @include('component.alert', ['alerta'=>session('errorLogin')] )
+                @endif
                 <button class="btn btn-primary d-grid w-100" type="submit">Acceder</button>
               </div>
             </form>

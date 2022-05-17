@@ -12,4 +12,8 @@ class profpermission extends Model
     protected $table = "profpermissions";
 
 
+    static public function getPermiso($profid , $appId , $action){
+        return profpermission::where('profid', $profid)->where('modappid',$appId)->where($action,1)->first();
+    }
+
 }

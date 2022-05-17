@@ -54,7 +54,7 @@ class LoginController extends Controller
 
             }
 
-            return redirect()->route('login')->with(['errorLogin' => 'Error por favor verifique los datos.']);
+            return redirect()->route('login')->with(['errorLogin' => 'Datos de acceso incorrectos']);
     }
      
     public function logout(Request $req  ,  UserController $user){
@@ -68,6 +68,10 @@ class LoginController extends Controller
         if (Auth::check()){
                 User::where('id', Auth::User()->id)->update(['updated_at' =>now()]);
          }
+    }
+
+    public function getAvatar(){
+            return Auth::User()->getAvatar();
     }
 
 }

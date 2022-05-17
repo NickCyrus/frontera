@@ -12,6 +12,7 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    public $appId;
     /**
      * The attributes that are mass assignable.
      *
@@ -41,4 +42,63 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
+
+    function getAvatar($url = '' ){
+
+            if ($url){
+                return $this->avatar;
+            }
+
+            if (!$this->avatar){
+
+                  return view('component.avatar',['iniciales'=> substr($this->name,0,2)]) ; 
+            }else{
+                    return view('component.avatar',['avatar'=>$this->avatar]);
+            }
+    }
+
+    public function getNameRol(){
+
+         return  profileModel::find($this->profid)->first()->profname;
+
+    }
+
+
+    public function getLogConection($limit = ''){
+        if ($limit){
+            return LogLogin::where('userid', $this->id)->orderby('created_at','DESC')->limit($limit)->get();
+        }else{
+            return LogLogin::where('userid', $this->id)->orderby('created_at','DESC')->get();
+        }
+    }
+
+    public function getLogAcction($limit = ''){
+        if ($limit){
+            return LogAction::where('userid', $this->id)->orderby('created_at','DESC')->limit($limit)->get();
+        }else{
+            return LogAction::where('userid', $this->id)->orderby('created_at','DESC')->get();
+        }
+    }
+
+
+    public function getMenuLeft(){
+                $modules  = profpermission::where('profid', $this->profid)->select('modappid')->get()->toArray();
+               return modulesapp::whereIn('id', $modules)->orderby('orderapp')->get();
+    }
+
+    public function canApp($appId){
+        return profpermission::where('profid', $this->profid)->where('modappid',$appId)->where('aview',1)->first();       
+    }
+
+    public function permission($appId){
+        return profpermission::where('profid', $this->profid)->where('modappid',$appId)->first();       
+    }
+
+    public function acction($appId , $action){
+        return profpermission::where('profid', $this->profid)->where('modappid',$appId)->where($action,1)->first();       
+    }
+
+
 }
